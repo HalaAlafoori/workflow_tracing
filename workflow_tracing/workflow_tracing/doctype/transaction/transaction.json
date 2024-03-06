@@ -6,16 +6,17 @@
  "engine": "InnoDB",
  "field_order": [
   "category",
-  "sader",
-  "wared",
+  "outgoing",
+  "incoming",
   "from_department",
   "to_department",
   "status",
-  "urgency",
+  "priority",
   "title",
   "description",
   "document_id",
-  "start_date"
+  "start_date",
+  "company"
  ],
  "fields": [
   {
@@ -25,18 +26,6 @@
    "label": "Category",
    "options": "Transaction Category",
    "reqd": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "sader",
-   "fieldtype": "Check",
-   "label": "Sader"
-  },
-  {
-   "default": "0",
-   "fieldname": "wared",
-   "fieldtype": "Check",
-   "label": "Wared"
   },
   {
    "fieldname": "from_department",
@@ -51,12 +40,8 @@
   {
    "fieldname": "status",
    "fieldtype": "Select",
-   "label": "Status"
-  },
-  {
-   "fieldname": "urgency",
-   "fieldtype": "Select",
-   "label": "Urgency "
+   "label": "Status",
+   "options": "Status 1\nStatus 2\nStatus 3"
   },
   {
    "fieldname": "title",
@@ -77,11 +62,36 @@
    "fieldname": "start_date",
    "fieldtype": "Data",
    "label": "Start Date"
+  },
+  {
+   "default": "0",
+   "fieldname": "outgoing",
+   "fieldtype": "Check",
+   "label": "Outgoing"
+  },
+  {
+   "default": "0",
+   "fieldname": "incoming",
+   "fieldtype": "Check",
+   "label": "Incoming"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "remember_last_selected_value": 1
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "Low\nMedium\nHigh\nUrgent"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-08 10:07:42.865398",
+ "modified": "2024-03-06 10:02:11.165100",
  "modified_by": "Administrator",
  "module": "Workflow Tracing",
  "name": "Transaction",
