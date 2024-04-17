@@ -5,17 +5,21 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "document_id",
   "category",
+  "party",
   "outgoing",
   "incoming",
   "from_department",
   "to_department",
-  "status",
   "priority",
+  "status",
   "title",
   "description",
-  "document_id",
   "start_date",
+  "reference_number",
+  "receive_date",
+  "end_user",
   "company"
  ],
  "fields": [
@@ -29,13 +33,15 @@
   },
   {
    "fieldname": "from_department",
-   "fieldtype": "Data",
-   "label": "From Department"
+   "fieldtype": "Link",
+   "label": "From Department",
+   "options": "Department"
   },
   {
    "fieldname": "to_department",
-   "fieldtype": "Data",
-   "label": "To Department"
+   "fieldtype": "Link",
+   "label": "To Department",
+   "options": "Department"
   },
   {
    "fieldname": "status",
@@ -76,22 +82,43 @@
    "label": "Incoming"
   },
   {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "remember_last_selected_value": 1
-  },
-  {
    "fieldname": "priority",
    "fieldtype": "Select",
    "label": "Priority",
    "options": "Low\nMedium\nHigh\nUrgent"
+  },
+  {
+   "fieldname": "reference_number",
+   "fieldtype": "Data",
+   "label": "Reference Number"
+  },
+  {
+   "fieldname": "receive_date",
+   "fieldtype": "Date",
+   "label": "Receive date"
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Select",
+   "label": "Party",
+   "options": "Internal\nExternal"
+  },
+  {
+   "fieldname": "end_user",
+   "fieldtype": "Link",
+   "label": "End User",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-06 10:02:11.165100",
+ "modified": "2024-04-17 19:15:36.588942",
  "modified_by": "Administrator",
  "module": "Workflow Tracing",
  "name": "Transaction",
