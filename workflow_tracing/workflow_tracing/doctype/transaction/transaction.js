@@ -30,3 +30,42 @@ frappe.ui.form.on('Transaction', {
         }
     }
 });
+
+///////////////////
+
+// hide (From Department) and (To Department) until select (Incoming) or (Outgoing)
+
+frappe.ui.form.on('Transaction', {
+    incoming: function(frm) {
+        toggleDepartmentFieldsVisibility(frm);
+    },
+    outgoing: function(frm) {
+        toggleDepartmentFieldsVisibility(frm);
+    },
+    refresh: function(frm) {
+        toggleDepartmentFieldsVisibility(frm);
+    }
+});
+
+function toggleDepartmentFieldsVisibility(frm) {
+    // Get references to the fields
+    var fromDeptField = frm.fields_dict.from_department;
+    var toDeptField = frm.fields_dict.to_department;
+
+    // Check if either checkbox is checked
+    var incomingChecked = frm.doc.incoming;
+    var outgoingChecked = frm.doc.outgoing;
+
+    // Set field visibility based on checkbox state
+    fromDeptField.df.hidden = !(incomingChecked || outgoingChecked);
+    toDeptField.df.hidden = !(incomingChecked || outgoingChecked);
+
+    // Refresh the form to apply the visibility changes
+    frm.refresh_field('from_department');
+    frm.refresh_field('to_department');
+}
+
+  //////////////////
+  
+  
+  
