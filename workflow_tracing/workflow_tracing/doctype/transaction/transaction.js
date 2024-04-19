@@ -9,15 +9,28 @@
 
 // restrect choosing of Incoming and Outgoing check box
 frappe.ui.form.on('Transaction', {
-    refresh: function(frm) {
-        frm.toggle_reqd('incoming', !frm.doc.outgoing);
-    },
+    // refresh: function(frm) {
+    //     frm.toggle_reqd('incoming', !frm.doc.outgoing);
+    // },
+    // outgoing: function(frm) {
+    //     frm.doc.incoming = !frm.doc.outgoing;
+    //     frm.refresh_field('incoming');
+    // },
+    // incoming: function(frm) {
+    //     frm.doc.outgoing = !frm.doc.incoming;
+    //     frm.refresh_field('outgoing');
+    // }
+
     outgoing: function(frm) {
-        frm.doc.incoming = !frm.doc.outgoing;
+        if(frm.doc.outgoing){
+            frm.doc.incoming = false;
+        }
         frm.refresh_field('incoming');
     },
     incoming: function(frm) {
-        frm.doc.outgoing = !frm.doc.incoming;
+        if(frm.doc.incoming){
+            frm.doc.outgoing = false;
+        }
         frm.refresh_field('outgoing');
     }
 });
@@ -68,4 +81,38 @@ function toggleDepartmentFieldsVisibility(frm) {
   //////////////////
   
   
-  
+//   frappe.ui.form.on('Transaction', {
+//     party: function(frm) {
+//         if (frm.doc.party === 'Internal') {
+//             frappe.call({
+//                 method: 'frappe.client.get_list',
+//                 args: {
+//                     doctype: 'Department',
+//                     // filters: { /* Add any filters if needed */ },
+//                     fields: ['department_name'],
+//                     // parent: 'Setup'
+//                 },
+//                 callback: function(response) {
+//                     console.log(response.message.map(d => d.name))
+//                     // if (response.message && Array.isArray(response.message)) {
+
+//                     //     frm.set_df_property('from_department', 'options', response.message.map(d => d.name));
+//                     // }
+//                 }
+//             });
+//         } else if (frm.doc.party === 'External') {
+//             // Add logic for the 'External' case if needed
+//         }
+//     }
+// });
+
+
+// frappe.ui.form.on('Transaction', {
+//     party: function(frm) {
+//         if (frm.doc.party === 'Internal') {
+
+//         } else if (frm.doc.party === 'External') {
+        
+//         }
+//     }
+// });

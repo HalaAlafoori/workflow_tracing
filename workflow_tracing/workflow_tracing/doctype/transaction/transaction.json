@@ -47,7 +47,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Status 1\nStatus 2\nStatus 3"
+   "options": "\nStatus 1\nStatus 2\nStatus 3"
   },
   {
    "fieldname": "title",
@@ -85,7 +85,7 @@
    "fieldname": "priority",
    "fieldtype": "Select",
    "label": "Priority",
-   "options": "Low\nMedium\nHigh\nUrgent"
+   "options": "\nLow\nMedium\nHigh\nUrgent"
   },
   {
    "fieldname": "reference_number",
@@ -101,7 +101,7 @@
    "fieldname": "party",
    "fieldtype": "Select",
    "label": "Party",
-   "options": "Internal\nExternal"
+   "options": "\nInternal\nExternal"
   },
   {
    "fieldname": "end_user",
@@ -118,7 +118,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-17 19:15:36.588942",
+ "modified": "2024-04-19 10:29:31.643997",
  "modified_by": "Administrator",
  "module": "Workflow Tracing",
  "name": "Transaction",
