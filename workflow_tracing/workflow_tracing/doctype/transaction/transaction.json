@@ -7,9 +7,9 @@
  "field_order": [
   "document_id",
   "category",
-  "party",
   "outgoing",
   "incoming",
+  "party",
   "from_department",
   "to_department",
   "priority",
@@ -19,7 +19,7 @@
   "start_date",
   "reference_number",
   "receive_date",
-  "end_user",
+  "client",
   "company"
  ],
  "fields": [
@@ -33,15 +33,15 @@
   },
   {
    "fieldname": "from_department",
-   "fieldtype": "Link",
+   "fieldtype": "Dynamic Link",
    "label": "From Department",
-   "options": "Department"
+   "options": "party"
   },
   {
    "fieldname": "to_department",
-   "fieldtype": "Link",
+   "fieldtype": "Dynamic Link",
    "label": "To Department",
-   "options": "Department"
+   "options": "party"
   },
   {
    "fieldname": "status",
@@ -99,26 +99,26 @@
   },
   {
    "fieldname": "party",
-   "fieldtype": "Select",
-   "label": "Party",
-   "options": "\nInternal\nExternal"
-  },
-  {
-   "fieldname": "end_user",
    "fieldtype": "Link",
-   "label": "End User",
-   "options": "Contact"
+   "label": "Party",
+   "options": "DocType"
   },
   {
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "label": "Client",
+   "options": "Contact"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-19 10:29:31.643997",
+ "modified": "2024-04-21 23:41:42.684684",
  "modified_by": "Administrator",
  "module": "Workflow Tracing",
  "name": "Transaction",
