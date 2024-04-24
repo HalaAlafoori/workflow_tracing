@@ -7,11 +7,14 @@
  "field_order": [
   "document_id",
   "category",
-  "party",
   "outgoing",
   "incoming",
+  "from_party",
+  "to_party",
   "from_department",
   "to_department",
+  "sub_department_link",
+  "sub_department",
   "priority",
   "status",
   "title",
@@ -19,7 +22,7 @@
   "start_date",
   "reference_number",
   "receive_date",
-  "end_user",
+  "client",
   "company"
  ],
  "fields": [
@@ -33,21 +36,21 @@
   },
   {
    "fieldname": "from_department",
-   "fieldtype": "Link",
+   "fieldtype": "Dynamic Link",
    "label": "From Department",
-   "options": "Department"
+   "options": "from_party"
   },
   {
    "fieldname": "to_department",
-   "fieldtype": "Link",
+   "fieldtype": "Dynamic Link",
    "label": "To Department",
-   "options": "Department"
+   "options": "to_party"
   },
   {
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Status 1\nStatus 2\nStatus 3"
+   "options": "\nStatus 1\nStatus 2\nStatus 3"
   },
   {
    "fieldname": "title",
@@ -85,7 +88,7 @@
    "fieldname": "priority",
    "fieldtype": "Select",
    "label": "Priority",
-   "options": "Low\nMedium\nHigh\nUrgent"
+   "options": "\nLow\nMedium\nHigh\nUrgent"
   },
   {
    "fieldname": "reference_number",
@@ -95,30 +98,50 @@
   {
    "fieldname": "receive_date",
    "fieldtype": "Date",
-   "label": "Receive date"
-  },
-  {
-   "fieldname": "party",
-   "fieldtype": "Select",
-   "label": "Party",
-   "options": "Internal\nExternal"
-  },
-  {
-   "fieldname": "end_user",
-   "fieldtype": "Link",
-   "label": "End User",
-   "options": "Contact"
+   "label": "Receive/Sent date"
   },
   {
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "label": "Client",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "from_party",
+   "fieldtype": "Link",
+   "label": "Party",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "to_party",
+   "fieldtype": "Link",
+   "label": "Party",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "sub_department",
+   "fieldtype": "Dynamic Link",
+   "hidden": 1,
+   "label": "Sub Department",
+   "options": "sub_department_link"
+  },
+  {
+   "fieldname": "sub_department_link",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Sub Department Link",
+   "options": "DocType"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-17 19:15:36.588942",
+ "modified": "2024-04-23 21:09:46.071317",
  "modified_by": "Administrator",
  "module": "Workflow Tracing",
  "name": "Transaction",
