@@ -64,6 +64,11 @@ function toggleDepartmentFieldsVisibility(frm) {
     // Get references to the fields
     var fromDeptField = frm.fields_dict.from_department;
     var toDeptField = frm.fields_dict.to_department;
+    
+    var fromPartyField = frm.fields_dict.from_party;
+    var toPartyField = frm.fields_dict.to_party;
+    
+    var subDepartment = frm.fields_dict.sub_department;
 
     // Check if either checkbox is checked
     var incomingChecked = frm.doc.incoming;
@@ -71,11 +76,19 @@ function toggleDepartmentFieldsVisibility(frm) {
 
     // Set field visibility based on checkbox state
     fromDeptField.df.hidden = !incomingChecked;
+    fromPartyField.df.hidden = !incomingChecked;
+    
     toDeptField.df.hidden = !outgoingChecked;
+    toPartyField.df.hidden = !outgoingChecked;
 
+    subDepartment.df.hidden = incomingChecked && outgoingChecked;
+    
     // Refresh the form to apply the visibility changes
     frm.refresh_field('from_department');
+    frm.refresh_field('from_party');
     frm.refresh_field('to_department');
+    frm.refresh_field('to_party');
+    frm.refresh_field('sub_department');
 }
 
 ////////////////////////////
@@ -83,14 +96,20 @@ function toggleDepartmentFieldsVisibility(frm) {
 
 frappe.ui.form.on('Transaction', {
     refresh: function(frm) {
-        frm.fields_dict.party.get_query = function(doc, cdt, cdn) {
+        frm.fields_dict.from_party.get_query = function(doc, cdt, cdn) {
             return {
                 filters: [
                     ['DocType', 'name', 'in', ['Department', 'External Party']]
                 ]
             };
         };
-
+        frm.fields_dict.to_party.get_query = function(doc, cdt, cdn) {
+            return {
+                filters: [
+                    ['DocType', 'name', 'in', ['Department', 'External Party']]
+                ]
+            };
+        };
         
     }
     
@@ -123,15 +142,157 @@ frappe.ui.form.on('Transaction', {
 // });
 
 
+// frappe.ui.form.on('Transaction', {
+//     refresh: function(frm) {
+//         // Check if the 'from_department' field has a value
+//         if (frm.doc.from_department) {
+//             frm.set_df_property('from_department', 'hidden', 0);
+//         } else {
+//             frm.set_df_property('from_department', 'hidden', 1);
+//         }
+
+//         if (frm.doc.to_department) {
+//             frm.set_df_property('to_department', 'hidden', 0);
+//         } else {
+//             frm.set_df_property('to_department', 'hidden', 1);
+//         }
+
+        // if (frm.doc.from_party) {
+        //     frm.set_df_property('from_party', 'hidden', 0);
+        // } else {
+        //     frm.set_df_property('from_party', 'hidden', 1);
+        // }
+
+        // if (frm.doc.to_party) {
+        //     frm.set_df_property('to_party', 'hidden', 0);
+        // } else {
+        //     frm.set_df_property('to_party', 'hidden', 1);
+        // }
+//     }
+// });
+
+
 frappe.ui.form.on('Transaction', {
-    refresh: function(frm) {
-        // Check if the 'from_department' field has a value
-        if (frm.doc.from_department) {
-            // Make the 'from_department' field visible
-            frm.set_df_property('from_department', 'hidden', 0);
-        } else {
-            // Hide the 'from_department' field
-            frm.set_df_property('from_department', 'hidden', 1);
+    incoming:function (frm) {
+        if(frm.doc.from_department)
+        {
+            frm.set_value('sub_department_link', frm.doc.from_party);
+            frm.set_value('sub_department', '');
+
+        }
+        else
+        {
+            frm.set_value('sub_department_link', '');
+            frm.set_value('sub_department', '');
+        }
+        // Apply a filter on the sub_department field
+        if(frm.doc.from_party == "Department")
+        frm.set_query('sub_department', function() {
+            return {
+                filters: {
+                    parent_department: frm.doc.from_department
+                }
+            };
+        });
+        if(frm.doc.from_party == "External Party")
+        frm.set_query('sub_department', function() {
+            return {
+                filters: {
+                    parent_external_party: frm.doc.from_department
+                }
+            };
+        });
+    },
+    outgoing:function (frm) {
+        if(frm.doc.to_department)
+        {
+            frm.set_value('sub_department_link', frm.doc.to_party);
+            frm.set_value('sub_department', '');
+        }
+        else
+        {
+            frm.set_value('sub_department_link', '');
+            frm.set_value('sub_department', '');
+        }
+
+        // Apply a filter on the sub_department field
+        if(frm.doc.to_party == "Department")
+        frm.set_query('sub_department', function() {
+            return {
+                filters: {
+                    parent_department: frm.doc.to_department
+                }
+            };
+        });
+        if(frm.doc.to_party == "External Party")
+        frm.set_query('sub_department', function() {
+            return {
+                filters: {
+                    parent_external_party: frm.doc.to_department
+                }
+            };
+        });
+    },
+    to_department: function(frm) {
+        if (frm.doc.outgoing) {
+            frm.set_value('sub_department_link', frm.doc.to_party);
+
+            // Apply a filter on the sub_department field
+            if(frm.doc.to_party == "Department")
+            frm.set_query('sub_department', function() {
+                return {
+                    filters: {
+                        parent_department: frm.doc.to_department
+                    }
+                };
+            });
+            if(frm.doc.to_party == "External Party")
+            frm.set_query('sub_department', function() {
+                return {
+                    filters: {
+                        parent_external_party: frm.doc.to_department
+                    }
+                };
+            });
+        }
+    },
+    from_department: function(frm) {
+        if (frm.doc.incoming) {
+            frm.set_value('sub_department_link', frm.doc.from_party);
+
+            // Apply a filter on the sub_department field
+            if(frm.doc.from_party == "Department")
+            frm.set_query('sub_department', function() {
+                return {
+                    filters: {
+                        parent_department: frm.doc.from_department
+                    }
+                };
+            });
+            if(frm.doc.from_party == "External Party")
+            frm.set_query('sub_department', function() {
+                return {
+                    filters: {
+                        parent_external_party: frm.doc.from_department
+                    }
+                };
+            });
         }
     }
 });
+// frappe.ui.form.on('Transaction', {
+//     from_department: function(frm) {
+//         if (frm.doc.outgoing) {
+//             frm.set_value('sub_department_link', frm.doc.to_party);
+
+//             // Apply a filter on the sub_department field
+//             frm.set_query('sub_department', function() {
+//                 return {
+//                     filters: {
+//                         parent_department: frm.doc.from_department
+//                     }
+//                 };
+//             });
+//         }
+//     }
+// });

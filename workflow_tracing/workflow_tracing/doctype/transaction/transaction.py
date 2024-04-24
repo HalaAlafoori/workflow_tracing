@@ -7,11 +7,16 @@ from frappe.model.document import Document
 
 class Transaction(Document):
     def before_save(self):
-		# self.fields.get("from_department").hidden = 0
         if self.outgoing:
+            self.from_party = "Department"
             department = frappe.get_doc("Department", "Accounts")
             if department:
-                self.from_department = department.name		
+                self.from_department = department.name	
+        if self.incoming:
+            self.to_party = "Department"
+            department = frappe.get_doc("Department", "Accounts")
+            if department:
+                self.to_department = department.name	
 
 
 # class Transaction(Document):
