@@ -23,7 +23,8 @@
   "reference_number",
   "receive_date",
   "client",
-  "company"
+  "company",
+  "parent_transaction"
  ],
  "fields": [
   {
@@ -137,11 +138,17 @@
    "hidden": 1,
    "label": "Sub Department Link",
    "options": "DocType"
+  },
+  {
+   "fieldname": "parent_transaction",
+   "fieldtype": "Link",
+   "label": "Parent Transaction",
+   "options": "Transaction"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-23 21:09:46.071317",
+ "modified": "2024-04-26 10:59:35.764356",
  "modified_by": "Administrator",
  "module": "Workflow Tracing",
  "name": "Transaction",
